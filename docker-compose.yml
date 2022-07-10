@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  nginx-ldap:
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./pam_ldap.conf:/etc/pam_ldap.conf:ro
+      - ./nginx-ldap-auth-daemon:/nginx-ldap-auth-daemon:ro
+    command:
+      - /nginx-ldap-auth-daemon
+      - --host=0.0.0.0

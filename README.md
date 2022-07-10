@@ -57,13 +57,15 @@ optional arguments:
   -c CONFIG, --config CONFIG
                         config with LDAP creds (Default: /etc/pam_ldap.conf)
 ```
-Only these 5 values are used from [the config](https://linux.die.net/man/5/pam_ldap) (rest is skipped):
+Only these 5 default values (and a few custom ones) are used from [the config](https://linux.die.net/man/5/pam_ldap) (rest is skipped):
 ```nginx
 host 192.168.0.1 192.168.0.2
 base DC=test,DC=local
 binddn ldapproxy@test
 bindpw Pa$$w0rd
 ssl on
+allow_empty_password off # Check if password is empty during login
+user_bind_string uid={},cn=users,cn=accounts,dc=test,dc=local # the {} will be substituted with uid value from ldap
 ```
 Multiple hosts could be specified, daemon would try reach all of them in case of error, before answering 500.
 
